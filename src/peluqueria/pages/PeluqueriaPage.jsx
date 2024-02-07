@@ -2,8 +2,9 @@ import { Calendar } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { addHours } from "date-fns";
 
-import { Navbar } from "../components";
+import { Navbar, PeluqueriaEventBox } from "../components";
 import { getMessagesEs, localizer } from "../../helpers";
+import { useState } from "react";
 
 const events = [
   {
@@ -19,8 +20,22 @@ const events = [
 ];
 
 export const PeluqueriaPage = () => {
-  const eventStyleGetter = (event, start, end, isSelected) => {
-    console.log({ event, start, end, isSelected });
+  const [lastView, setLastView] = useState(
+    localStorage.getItem("lastView") || "month"
+  );
+
+  const eventStyleGetter = (event, start, end, isSelected) => {};
+
+  const onDoubleClick = (event) => {
+    console.log({ doubleClick: event });
+  };
+
+  const onSelect = (event) => {
+    console.log({ onClick: event });
+  };
+
+  const onViewChanged = (event) => {
+    localStorage.setItem("lastView", event);
   };
 
   return (
@@ -30,12 +45,19 @@ export const PeluqueriaPage = () => {
       <Calendar
         culture="es"
         localizer={localizer}
+        defaultView={lastView}
         events={events}
         startAccessor="start"
         endAccessor="end"
         style={{ height: "calc(100vh - 80px)" }}
         messages={getMessagesEs()}
         eventPropGetter={eventStyleGetter}
+        components={{
+          event: PeluqueriaEventBox,
+        }}
+        onDoubleClickEvent={onDoubleClick}
+        onSelectEvent={onSelect}
+        onView={onViewChanged}
       />
     </>
   );

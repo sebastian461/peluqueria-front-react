@@ -1,3 +1,9 @@
+import { Navbar } from "../components";
+
 export const PeluqueriaPage = () => {
-  return <div>PeluqueriaPage</div>;
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 };

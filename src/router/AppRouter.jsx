@@ -28,7 +28,7 @@ const authenticatedRoutes = [
   },
 ];
 
-const status = false;
+const status = true;
 
 export const AppRouter = () => {
   const routes = !status

@@ -4,6 +4,7 @@ import {
   onAddNewService,
   onSetActiveEvent,
   onSetActiveService,
+  onUpdateService,
 } from "../store/peluqueria/peluqueriaSlice";
 
 export const usePeluqueriaStore = () => {
@@ -30,11 +31,21 @@ export const usePeluqueriaStore = () => {
 
   const startSavingService = async (service) => {
     //TODO: conectar a la bd
+    if (service.id) {
+      dispatch(
+        onUpdateService({
+          ...service,
+          amount: parseFloat(service.amount),
+        })
+      );
+      return;
+    }
+
     dispatch(
       onAddNewService({
         id: new Date().getTime(),
         ...service,
-        amount: parseInt(service.amount),
+        amount: parseFloat(service.amount),
       })
     );
   };

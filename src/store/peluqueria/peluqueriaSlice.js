@@ -45,6 +45,11 @@ export const peluqueriaSlice = createSlice({
     onAddNewService: (state, { payload }) => {
       state.services.push(payload);
     },
+    onUpdateService: (state, { payload }) => {
+      state.services = state.services.map((s) => {
+        return s.id === payload.id ? payload : s;
+      });
+    },
   },
 });
 
@@ -53,4 +58,5 @@ export const {
   onAddNewService,
   onSetActiveEvent,
   onSetActiveService,
+  onUpdateService,
 } = peluqueriaSlice.actions;

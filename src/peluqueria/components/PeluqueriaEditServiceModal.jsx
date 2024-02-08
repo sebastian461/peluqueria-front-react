@@ -80,6 +80,7 @@ export const PeluqueriaEditServiceModal = () => {
             className="form-control"
             type="number"
             min={0}
+            step={0.01}
             name="amount"
             value={formValues.amount}
             onChange={onInputChage}

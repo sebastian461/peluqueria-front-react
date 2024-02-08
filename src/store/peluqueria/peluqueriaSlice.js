@@ -30,12 +30,27 @@ export const peluqueriaSlice = createSlice({
     ],
     events: [tempEvent],
     activeEvent: null,
+    activeService: null,
   },
   reducers: {
     onSetActiveEvent: (state, { payload }) => {
       state.activeEvent = payload;
     },
+    onSetActiveService: (state, { payload }) => {
+      state.activeService = payload;
+    },
+    onAddNewEvent: (state, { payload }) => {
+      state.events.push(payload);
+    },
+    onAddNewService: (state, { payload }) => {
+      state.services.push(payload);
+    },
   },
 });
 
-export const { onSetActiveEvent } = peluqueriaSlice.actions;
+export const {
+  onAddNewEvent,
+  onAddNewService,
+  onSetActiveEvent,
+  onSetActiveService,
+} = peluqueriaSlice.actions;

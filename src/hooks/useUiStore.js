@@ -1,12 +1,26 @@
 import { useDispatch, useSelector } from "react-redux";
-import { onCloseModal, onOpenEventModal } from "../store/ui/uiSlice";
+import {
+  onCloseModal,
+  onOpenEditServiceModal,
+  onOpenEventModal,
+  onOpenServiceModal,
+} from "../store/ui/uiSlice";
 
 export const useUiStore = () => {
-  const { isEventModalOpen } = useSelector((state) => state.ui);
+  const { isEventModalOpen, isServiceModalOpen, isEditServiceModalOpen } =
+    useSelector((state) => state.ui);
   const dispatch = useDispatch();
 
   const openEventModal = () => {
     dispatch(onOpenEventModal());
+  };
+
+  const openServiceModal = () => {
+    dispatch(onOpenServiceModal());
+  };
+
+  const openEditServiceModal = (service = {}) => {
+    dispatch(onOpenEditServiceModal());
   };
 
   const closeModal = () => {
@@ -16,9 +30,13 @@ export const useUiStore = () => {
   return {
     //* Propiedades
     isEventModalOpen,
+    isServiceModalOpen,
+    isEditServiceModalOpen,
 
     //* Métodos
-    openEventModal,
     closeModal,
+    openEditServiceModal,
+    openEventModal,
+    openServiceModal,
   };
 };

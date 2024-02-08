@@ -1,7 +1,16 @@
 import { Calendar } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
-import { Navbar, PeluqueriaEventBox, PeluqueriaModal } from "../components";
+import {
+  FabAddNewEvent,
+  FabAddNewService,
+  Navbar,
+  PeluqueriaEditServiceModal,
+  PeluqueriaEventBox,
+  PeluqueriaModal,
+  PeluqueriaServiceModal,
+} from "../components";
+
 import { getMessagesEs, localizer } from "../../helpers";
 import { useState } from "react";
 import { usePeluqueriaStore, useUiStore } from "../../hooks";
@@ -17,7 +26,6 @@ export const PeluqueriaPage = () => {
   const eventStyleGetter = (event, start, end, isSelected) => {};
 
   const onSelect = (event) => {
-    console.log({ onClick: event });
     setActiveEvent(event);
   };
 
@@ -47,6 +55,11 @@ export const PeluqueriaPage = () => {
       />
 
       <PeluqueriaModal />
+      <PeluqueriaServiceModal />
+      <PeluqueriaEditServiceModal />
+
+      <FabAddNewService />
+      <FabAddNewEvent />
     </>
   );
 };

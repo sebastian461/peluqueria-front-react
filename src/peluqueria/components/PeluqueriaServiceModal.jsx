@@ -1,35 +1,21 @@
-import { useMemo, useState } from "react";
-
-import { addHours } from "date-fns";
-import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
 import Modal from "react-modal";
-
 import { usePeluqueriaStore, useUiStore } from "../../hooks";
+import { useState } from "react";
+import Swal from "sweetalert2";
 import { customStyles } from "../../helpers";
 
 Modal.setAppElement("#root");
 
-export const PeluqueriaModal = () => {
-  const { services, startSavingEvent } = usePeluqueriaStore();
-  const { isEventModalOpen, closeModal } = useUiStore();
+export const PeluqueriaServiceModal = () => {
+  const { services, setActiveService } = usePeluqueriaStore();
+
+  const { isServiceModalOpen, closeModal, openEditServiceModal } = useUiStore();
+
   const [formSubmited, setFormSubmited] = useState(false);
 
   const [formValues, setFormValues] = useState({
     service: undefined,
-    start: new Date(),
-    end: addHours(new Date(), 1),
-    user: {
-      id: 1,
-      name: "Sebastián",
-    },
   });
-
-  const titleClass = useMemo(() => {
-    if (!formSubmited) return "";
-
-    return isNaN(formValues.service) ? "is-invalid" : "is-valid";
-  }, [formValues.service, formSubmited]);
 
   const onSelectedChange = ({ target }, changing) => {
     setFormValues({
@@ -42,7 +28,7 @@ export const PeluqueriaModal = () => {
     closeModal();
   };
 
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
     setFormSubmited(true);
 
@@ -52,31 +38,37 @@ export const PeluqueriaModal = () => {
       return;
     }
 
-    await startSavingEvent(formValues);
+    setActiveService(formValues.service);
     closeModal();
+    openEditServiceModal();
+  };
+
+  const handleNewClick = () => {
+    setActiveService(null);
+    closeModal();
+    openEditServiceModal();
   };
 
   return (
     <Modal
-      isOpen={isEventModalOpen}
+      isOpen={isServiceModalOpen}
       onRequestClose={onCloseModal}
       style={customStyles}
       contentLabel="Example Modal"
-      className="modal"
+      className="modal modal-size"
       overlayClassName="modal-fondo"
       closeTimeoutMS={200}
     >
-      <h1> Nuevo evento </h1>
+      <h1> Servicios </h1>
       <hr />
       <form className="container" onSubmit={onSubmit}>
         <div className="form-group mb-2">
-          <label>Servicios</label>
           <select
-            className={`form-select ${titleClass}`}
+            className="form-select"
             value={formValues.service}
+            size={5}
             onChange={(event) => onSelectedChange(event, "service")}
           >
-            <option value={null}>--Seleccionar--</option>
             {services.map((s) => (
               <option value={s.id} key={s.id}>
                 {s.name} - ${s.amount}
@@ -85,10 +77,24 @@ export const PeluqueriaModal = () => {
           </select>
         </div>
 
-        <button type="submit" className="btn btn-outline-primary btn-block">
-          <i className="far fa-save"></i>
-          <span> Guardar</span>
+        <button type="submit" className="btn btn-outline-warning btn-block">
+          <i className="far fa-edit"></i>
+          <span> Editar</span>
         </button>
+
+        <a type="button" className="btn btn-outline-danger btn-block ms-2">
+          <i className="fas fa-trash"></i>
+          <span> Eliminar</span>
+        </a>
+
+        <a
+          type="button"
+          className="btn btn-outline-primary btn-block ms-2"
+          onClick={handleNewClick}
+        >
+          <i className="far fa-plus"></i>
+          <span> Nuevo</span>
+        </a>
       </form>
     </Modal>
   );

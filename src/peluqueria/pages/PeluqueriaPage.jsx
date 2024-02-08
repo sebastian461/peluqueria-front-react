@@ -5,6 +5,7 @@ import { addHours } from "date-fns";
 import { Navbar, PeluqueriaEventBox, PeluqueriaModal } from "../components";
 import { getMessagesEs, localizer } from "../../helpers";
 import { useState } from "react";
+import { useUiStore } from "../../hooks";
 
 const events = [
   {
@@ -20,15 +21,13 @@ const events = [
 ];
 
 export const PeluqueriaPage = () => {
+  const { openEventModal } = useUiStore();
+
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "month"
   );
 
   const eventStyleGetter = (event, start, end, isSelected) => {};
-
-  const onDoubleClick = (event) => {
-    console.log({ doubleClick: event });
-  };
 
   const onSelect = (event) => {
     console.log({ onClick: event });
@@ -55,7 +54,6 @@ export const PeluqueriaPage = () => {
         components={{
           event: PeluqueriaEventBox,
         }}
-        onDoubleClickEvent={onDoubleClick}
         onSelectEvent={onSelect}
         onView={onViewChanged}
       />

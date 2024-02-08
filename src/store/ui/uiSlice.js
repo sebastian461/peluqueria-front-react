@@ -3,16 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
 export const uiSlice = createSlice({
   name: "ui",
   initialState: {
-    isEventModalOpen: false,
+    isEventModalOpen: true,
   },
   reducers: {
     onOpenEventModal: (state) => {
       state.isEventModalOpen = true;
     },
-    onCloseEventModal: (state) => {
+    onCloseModal: (state) => {
       state.isEventModalOpen = false;
     },
   },
 });
 
-export const { increment } = uiSlice.actions;
+export const { onOpenEventModal, onCloseModal } = uiSlice.actions;

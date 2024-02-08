@@ -3,8 +3,9 @@ import { useMemo, useState } from "react";
 import { addHours } from "date-fns";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
-
 import Modal from "react-modal";
+
+import { useUiStore } from "../../hooks";
 
 const customStyles = {
   content: {
@@ -33,7 +34,7 @@ const services = [
 Modal.setAppElement("#root");
 
 export const PeluqueriaModal = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const { isEventModalOpen, closeModal } = useUiStore();
   const [formSubmited, setFormSubmited] = useState(false);
 
   const [formValues, setFormValues] = useState({
@@ -56,8 +57,7 @@ export const PeluqueriaModal = () => {
   };
 
   const onCloseModal = () => {
-    console.log("Cerrando modal");
-    setIsOpen(false);
+    closeModal();
   };
 
   const onSubmit = (event) => {
@@ -75,7 +75,7 @@ export const PeluqueriaModal = () => {
 
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={isEventModalOpen}
       onRequestClose={onCloseModal}
       style={customStyles}
       contentLabel="Example Modal"

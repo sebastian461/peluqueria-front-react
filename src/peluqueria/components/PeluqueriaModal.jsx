@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 import Modal from "react-modal";
 
-import { useUiStore } from "../../hooks";
+import { usePeluqueriaStore, useUiStore } from "../../hooks";
 
 const customStyles = {
   content: {
@@ -18,29 +18,17 @@ const customStyles = {
   },
 };
 
-const services = [
-  {
-    id: 1,
-    name: "Corte normal",
-    amount: 2.5,
-  },
-  {
-    id: 2,
-    name: "Corte con barba",
-    amount: 3,
-  },
-];
-
 Modal.setAppElement("#root");
 
 export const PeluqueriaModal = () => {
+  const { services } = usePeluqueriaStore();
   const { isEventModalOpen, closeModal } = useUiStore();
   const [formSubmited, setFormSubmited] = useState(false);
 
   const [formValues, setFormValues] = useState({
     service: undefined,
     start: new Date(),
-    end: addHours(new Date(), 2),
+    end: addHours(new Date(), 1),
   });
 
   const titleClass = useMemo(() => {

@@ -1,26 +1,13 @@
 import { Calendar } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { addHours } from "date-fns";
 
 import { Navbar, PeluqueriaEventBox, PeluqueriaModal } from "../components";
 import { getMessagesEs, localizer } from "../../helpers";
 import { useState } from "react";
-import { useUiStore } from "../../hooks";
-
-const events = [
-  {
-    title: "Corte normal",
-    amount: 2.5,
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    user: {
-      id: 1,
-      name: "Sebastián",
-    },
-  },
-];
+import { usePeluqueriaStore, useUiStore } from "../../hooks";
 
 export const PeluqueriaPage = () => {
+  const { events } = usePeluqueriaStore();
   const { openEventModal } = useUiStore();
 
   const [lastView, setLastView] = useState(

@@ -7,7 +7,7 @@ import { useState } from "react";
 import { usePeluqueriaStore, useUiStore } from "../../hooks";
 
 export const PeluqueriaPage = () => {
-  const { events } = usePeluqueriaStore();
+  const { events, setActiveEvent } = usePeluqueriaStore();
   const { openEventModal } = useUiStore();
 
   const [lastView, setLastView] = useState(
@@ -18,6 +18,7 @@ export const PeluqueriaPage = () => {
 
   const onSelect = (event) => {
     console.log({ onClick: event });
+    setActiveEvent(event);
   };
 
   const onViewChanged = (event) => {

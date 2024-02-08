@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { addHours } from "date-fns";
 
 const tempEvent = {
+  id: 1,
   title: "Corte normal",
   amount: 2.5,
   start: new Date(),
@@ -31,10 +32,10 @@ export const peluqueriaSlice = createSlice({
     activeEvent: null,
   },
   reducers: {
-    increment: (state /* action */) => {
-      state.counter += 1;
+    onSetActiveEvent: (state, { payload }) => {
+      state.activeEvent = payload;
     },
   },
 });
 
-export const { increment } = peluqueriaSlice.actions;
+export const { onSetActiveEvent } = peluqueriaSlice.actions;

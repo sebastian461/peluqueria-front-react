@@ -1,13 +1,14 @@
 import Modal from "react-modal";
 import { usePeluqueriaStore, useUiStore } from "../../hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { customStyles } from "../../helpers";
 
 Modal.setAppElement("#root");
 
 export const PeluqueriaServiceModal = () => {
-  const { services, setActiveService } = usePeluqueriaStore();
+  const { services, setActiveService, activeService, startDeletingService } =
+    usePeluqueriaStore();
 
   const { isServiceModalOpen, closeModal, openEditServiceModal } = useUiStore();
 
@@ -28,6 +29,10 @@ export const PeluqueriaServiceModal = () => {
     closeModal();
   };
 
+  useEffect(() => {
+    setActiveService(formValues.service);
+  }, [formValues]);
+
   const onSubmit = (event) => {
     event.preventDefault();
     setFormSubmited(true);
@@ -38,7 +43,6 @@ export const PeluqueriaServiceModal = () => {
       return;
     }
 
-    setActiveService(formValues.service);
     closeModal();
     openEditServiceModal();
   };
@@ -47,6 +51,16 @@ export const PeluqueriaServiceModal = () => {
     setActiveService(null);
     closeModal();
     openEditServiceModal();
+  };
+
+  const handleDeleteClick = async () => {
+    if (isNaN(formValues.service)) {
+      Swal.fire("Error en el servicio", "No ha marcado un servicio", "error");
+      console.log("Error en el servicio");
+      return;
+    }
+
+    await startDeletingService(activeService);
   };
 
   return (
@@ -82,7 +96,11 @@ export const PeluqueriaServiceModal = () => {
           <span> Editar</span>
         </button>
 
-        <a type="button" className="btn btn-outline-danger btn-block ms-2">
+        <a
+          type="button"
+          className="btn btn-outline-danger btn-block ms-2"
+          onClick={handleDeleteClick}
+        >
           <i className="fas fa-trash"></i>
           <span> Eliminar</span>
         </a>

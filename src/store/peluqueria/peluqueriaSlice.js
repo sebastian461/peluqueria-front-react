@@ -50,6 +50,10 @@ export const peluqueriaSlice = createSlice({
         return s.id === payload.id ? payload : s;
       });
     },
+    onDeleteService: (state, { payload }) => {
+      state.services = state.services.filter((s) => s.id !== payload.id);
+      state.activeService = null;
+    },
   },
 });
 
@@ -59,4 +63,5 @@ export const {
   onSetActiveEvent,
   onSetActiveService,
   onUpdateService,
+  onDeleteService,
 } = peluqueriaSlice.actions;

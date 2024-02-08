@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   onAddNewEvent,
   onAddNewService,
+  onDeleteService,
   onSetActiveEvent,
   onSetActiveService,
   onUpdateService,
@@ -50,6 +51,11 @@ export const usePeluqueriaStore = () => {
     );
   };
 
+  const startDeletingService = async (service) => {
+    //TODO: conectar a la bd
+    dispatch(onDeleteService(service));
+  };
+
   const startSavingEvent = async (peluqueriaEvent) => {
     //TODO: conectar a la bd
     const peluqueriaService = services.find(
@@ -80,5 +86,6 @@ export const usePeluqueriaStore = () => {
     setActiveService,
     startSavingEvent,
     startSavingService,
+    startDeletingService,
   };
 };

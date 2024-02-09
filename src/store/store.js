@@ -7,4 +7,8 @@ export const store = configureStore({
     ui: uiSlice.reducer,
     peluqueria: peluqueriaSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

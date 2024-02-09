@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./authStyles.css";
 
 export const RegisterPage = () => {
@@ -41,6 +42,9 @@ export const RegisterPage = () => {
               <input type="submit" className="btnSubmit" value="Crear cuenta" />
             </div>
           </form>
+          <Link to="/auth/login" style={{ color: "white" }}>
+            ¿Ya tienes cuenta?
+          </Link>
         </div>
       </div>
     </div>

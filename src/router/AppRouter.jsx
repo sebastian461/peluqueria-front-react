@@ -5,6 +5,8 @@ import {
 } from "react-router-dom";
 import { AuthRouter } from "./AuthRouter";
 import { PeluqueriaRouter } from "./PeluqueriaRouter";
+import { useAuthStore } from "../hooks";
+import { useEffect } from "react";
 
 const notAuthenticatedRoutes = [
   {
@@ -28,12 +30,17 @@ const authenticatedRoutes = [
   },
 ];
 
-const status = false;
-
 export const AppRouter = () => {
-  const routes = !status
-    ? [...notAuthenticatedRoutes]
-    : [...authenticatedRoutes];
+  const { status, checkAuthToken } = useAuthStore();
+
+  useEffect(() => {
+    checkAuthToken();
+  }, []);
+
+  const routes =
+    status === "authenticated"
+      ? [...authenticatedRoutes]
+      : [...notAuthenticatedRoutes];
 
   const router = createBrowserRouter(routes);
 

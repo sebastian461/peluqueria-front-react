@@ -13,11 +13,10 @@ import {
 
 import { getMessagesEs, localizer } from "../../helpers";
 import { useState } from "react";
-import { usePeluqueriaStore, useUiStore } from "../../hooks";
+import { usePeluqueriaStore } from "../../hooks";
 
 export const PeluqueriaPage = () => {
   const { events, setActiveEvent } = usePeluqueriaStore();
-  const { openEventModal } = useUiStore();
 
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "month"

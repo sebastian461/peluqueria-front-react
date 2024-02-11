@@ -85,7 +85,7 @@ export const PeluqueriaServiceModal = () => {
           >
             {services.map((s) => (
               <option value={s.id} key={s.id}>
-                {s.name} - ${s.amount}
+                {s.title} - ${s.amount}
               </option>
             ))}
           </select>

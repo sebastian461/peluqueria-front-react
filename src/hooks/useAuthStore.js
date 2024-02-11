@@ -61,10 +61,12 @@ export const useAuthStore = () => {
 
     try {
       const { data } = await peluqueriaApi.get("/renew");
-      const { token } = data.data.user;
+      const { user } = data.data;
+      const { token } = user;
 
       localStorage.setItem("token", token.token);
       localStorage.setItem("token-init-date", new Date().getTime());
+      dispatch(onLogin({ id: user.id, name: user.name }));
     } catch (error) {
       localStorage.clear();
       dispatch(onLogout());

@@ -3,10 +3,12 @@ import {
   onAddNewEvent,
   onAddNewService,
   onDeleteService,
+  onGetServices,
   onSetActiveEvent,
   onSetActiveService,
   onUpdateService,
 } from "../store/peluqueria/peluqueriaSlice";
+import peluqueriaApi from "../api/peluqueriaApi";
 
 export const usePeluqueriaStore = () => {
   const dispatch = useDispatch();
@@ -74,6 +76,16 @@ export const usePeluqueriaStore = () => {
     );
   };
 
+  const getServices = async () => {
+    try {
+      const { data } = await peluqueriaApi.get("/service");
+      const { services } = data.data;
+      dispatch(onGetServices(services));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     //* Propiedades
     events,
@@ -87,5 +99,6 @@ export const usePeluqueriaStore = () => {
     startSavingEvent,
     startSavingService,
     startDeletingService,
+    getServices,
   };
 };

@@ -4,7 +4,7 @@ import "./styles.css";
 import { PeluqueriaApp } from "./PeluqueriaApp";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <PeluqueriaApp />
-  </React.StrictMode>
+  //<React.StrictMode>
+  <PeluqueriaApp />
+  //</React.StrictMode>
 );

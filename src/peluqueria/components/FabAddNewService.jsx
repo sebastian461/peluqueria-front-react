@@ -1,9 +1,11 @@
-import { useUiStore } from "../../hooks";
+import { usePeluqueriaStore, useUiStore } from "../../hooks";
 
 export const FabAddNewService = () => {
   const { openServiceModal } = useUiStore();
+  const { getServices } = usePeluqueriaStore();
 
   const handleClickNew = () => {
+    getServices();
     openServiceModal();
   };
 

@@ -16,18 +16,7 @@ const tempEvent = {
 export const peluqueriaSlice = createSlice({
   name: "peluqueria",
   initialState: {
-    services: [
-      {
-        id: 1,
-        name: "Corte normal",
-        amount: 2.5,
-      },
-      {
-        id: 2,
-        name: "Corte con barba",
-        amount: 3,
-      },
-    ],
+    services: [],
     events: [tempEvent],
     activeEvent: null,
     activeService: null,
@@ -54,6 +43,9 @@ export const peluqueriaSlice = createSlice({
       state.services = state.services.filter((s) => s.id !== payload.id);
       state.activeService = null;
     },
+    onGetServices: (state, { payload }) => {
+      state.services = payload;
+    },
   },
 });
 
@@ -64,4 +56,5 @@ export const {
   onSetActiveService,
   onUpdateService,
   onDeleteService,
+  onGetServices,
 } = peluqueriaSlice.actions;

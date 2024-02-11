@@ -33,19 +33,26 @@ export const usePeluqueriaStore = () => {
   };
 
   const startSavingService = async (service) => {
+    let procecedService = {};
+
     try {
       if (service.id) {
-        dispatch(
-          onUpdateService({
-            ...service,
-            amount: parseFloat(service.amount),
-          })
+        procecedService = {
+          ...service,
+          amount: parseFloat(service.amount),
+        };
+
+        const { data } = await peluqueriaApi.put(
+          `/service/${service.id}`,
+          procecedService
         );
+
+        dispatch(onUpdateService(data.data.service));
         return;
       }
 
-      const procecedService = {
-        title: service.title,
+      procecedService = {
+        ...service,
         amount: parseFloat(service.amount),
       };
 

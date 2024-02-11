@@ -41,7 +41,7 @@ export const PeluqueriaEditServiceModal = () => {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    if (formValues.name.length <= 0) {
+    if (formValues.title.length <= 0) {
       Swal.fire("Error en el servicio", "No ha rellenado los campos", "error");
       console.log("Error en el servicio");
       return;

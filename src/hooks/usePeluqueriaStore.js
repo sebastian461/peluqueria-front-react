@@ -65,8 +65,12 @@ export const usePeluqueriaStore = () => {
   };
 
   const startDeletingService = async (service) => {
-    //TODO: conectar a la bd
-    dispatch(onDeleteService(service));
+    try {
+      await peluqueriaApi.delete(`/service/${service.id}`);
+      dispatch(onDeleteService(service));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const startSavingEvent = async (peluqueriaEvent) => {

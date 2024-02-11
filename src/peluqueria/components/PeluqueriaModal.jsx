@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 
-import { addHours } from "date-fns";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 import Modal from "react-modal";
@@ -16,20 +15,14 @@ export const PeluqueriaModal = () => {
   const [formSubmited, setFormSubmited] = useState(false);
 
   const [formValues, setFormValues] = useState({
-    service: undefined,
-    start: new Date(),
-    end: addHours(new Date(), 1),
-    user: {
-      id: 1,
-      name: "Sebastián",
-    },
+    id: undefined,
   });
 
   const titleClass = useMemo(() => {
     if (!formSubmited) return "";
 
-    return isNaN(formValues.service) ? "is-invalid" : "is-valid";
-  }, [formValues.service, formSubmited]);
+    return isNaN(formValues.id) ? "is-invalid" : "is-valid";
+  }, [formValues.id, formSubmited]);
 
   const onSelectedChange = ({ target }, changing) => {
     setFormValues({
@@ -42,17 +35,17 @@ export const PeluqueriaModal = () => {
     closeModal();
   };
 
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
     setFormSubmited(true);
 
-    if (isNaN(formValues.service)) {
+    if (isNaN(formValues.id)) {
       Swal.fire("Error en el servicio", "No ha marcado un servicio", "error");
       console.log("Error en el servicio");
       return;
     }
 
-    await startSavingEvent(formValues);
+    startSavingEvent(formValues.id);
     closeModal();
   };
 
@@ -73,13 +66,14 @@ export const PeluqueriaModal = () => {
           <label>Servicios</label>
           <select
             className={`form-select ${titleClass}`}
-            value={formValues.service}
-            onChange={(event) => onSelectedChange(event, "service")}
+            value={formValues.id}
+            onChange={(event) => onSelectedChange(event, "id")}
+            name="id"
           >
             <option value={null}>--Seleccionar--</option>
             {services.map((s) => (
               <option value={s.id} key={s.id}>
-                {s.name} - ${s.amount}
+                {s.title} - ${s.amount}
               </option>
             ))}
           </select>

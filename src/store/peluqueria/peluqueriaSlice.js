@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addHours } from "date-fns";
 
-const tempEvent = {
+/* const tempEvent = {
   id: 1,
   title: "Corte normal",
   amount: 2.5,
@@ -11,7 +11,7 @@ const tempEvent = {
     id: 1,
     name: "Sebastián",
   },
-};
+}; */
 
 export const peluqueriaSlice = createSlice({
   name: "peluqueria",

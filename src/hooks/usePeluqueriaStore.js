@@ -11,6 +11,7 @@ import {
 } from "../store/peluqueria/peluqueriaSlice";
 import peluqueriaApi from "../api/peluqueriaApi";
 import { convertEventsToDateEvents } from "../helpers";
+import { addHours, parseISO } from "date-fns";
 
 export const usePeluqueriaStore = () => {
   const dispatch = useDispatch();
@@ -96,22 +97,27 @@ export const usePeluqueriaStore = () => {
     }
   };
 
-  const startSavingEvent = async (peluqueriaEvent) => {
-    //TODO: conectar a la bd
-    const peluqueriaService = services.find(
-      (s) => s.id === parseInt(peluqueriaEvent.service)
-    );
+  const startSavingEvent = async (id) => {
+    try {
+      const event = {
+        start: new Date(),
+        end: addHours(new Date(), 1),
+      };
 
-    delete peluqueriaEvent.service;
+      console.log(id);
 
-    dispatch(
-      onAddNewEvent({
-        id: new Date().getTime(),
-        title: peluqueriaService.name,
-        amount: peluqueriaService.amount,
-        ...peluqueriaEvent,
-      })
-    );
+      const { data } = await peluqueriaApi.post(`/event/${id}`, event);
+
+      const eventCreated = {
+        ...data.data.event,
+        start: parseISO(data.data.event.start),
+        end: parseISO(data.data.event.end),
+      };
+
+      dispatch(onAddNewEvent(eventCreated));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return {

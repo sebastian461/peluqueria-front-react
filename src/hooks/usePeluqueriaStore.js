@@ -33,24 +33,28 @@ export const usePeluqueriaStore = () => {
   };
 
   const startSavingService = async (service) => {
-    //TODO: conectar a la bd
-    if (service.id) {
-      dispatch(
-        onUpdateService({
-          ...service,
-          amount: parseFloat(service.amount),
-        })
-      );
-      return;
-    }
+    try {
+      if (service.id) {
+        dispatch(
+          onUpdateService({
+            ...service,
+            amount: parseFloat(service.amount),
+          })
+        );
+        return;
+      }
 
-    dispatch(
-      onAddNewService({
-        id: new Date().getTime(),
-        ...service,
+      const procecedService = {
+        title: service.title,
         amount: parseFloat(service.amount),
-      })
-    );
+      };
+
+      const { data } = await peluqueriaApi.post("/service", procecedService);
+
+      dispatch(onAddNewService(data.data.service));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const startDeletingService = async (service) => {

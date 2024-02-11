@@ -12,15 +12,20 @@ import {
 } from "../components";
 
 import { getMessagesEs, localizer } from "../../helpers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePeluqueriaStore } from "../../hooks";
 
 export const PeluqueriaPage = () => {
-  const { events, setActiveEvent } = usePeluqueriaStore();
+  const { events, setActiveEvent, getServices, activeService } =
+    usePeluqueriaStore();
 
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "month"
   );
+
+  useEffect(() => {
+    getServices();
+  }, []);
 
   const eventStyleGetter = (event, start, end, isSelected) => {};
 

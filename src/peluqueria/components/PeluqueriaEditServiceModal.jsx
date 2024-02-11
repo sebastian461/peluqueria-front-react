@@ -9,7 +9,7 @@ export const PeluqueriaEditServiceModal = () => {
   const { closeModal, isEditServiceModalOpen } = useUiStore();
 
   const [formValues, setFormValues] = useState({
-    name: "",
+    title: "",
     amount: 0,
   });
 
@@ -18,12 +18,13 @@ export const PeluqueriaEditServiceModal = () => {
       setFormValues({
         ...activeService,
       });
-    } else {
-      setFormValues({
-        name: "",
-        amount: 0,
-      });
+      return;
     }
+
+    setFormValues({
+      title: "",
+      amount: 0,
+    });
   }, [activeService]);
 
   const onInputChage = ({ target }) => {
@@ -37,7 +38,7 @@ export const PeluqueriaEditServiceModal = () => {
     closeModal();
   };
 
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
 
     if (formValues.name.length <= 0) {
@@ -46,7 +47,7 @@ export const PeluqueriaEditServiceModal = () => {
       return;
     }
 
-    await startSavingService(formValues);
+    startSavingService(formValues);
     closeModal();
   };
 
@@ -68,8 +69,8 @@ export const PeluqueriaEditServiceModal = () => {
           <input
             className="form-control"
             type="text"
-            name="name"
-            value={formValues.name}
+            name="title"
+            value={formValues.title}
             onChange={onInputChage}
           />
         </div>

@@ -53,14 +53,14 @@ export const PeluqueriaServiceModal = () => {
     openEditServiceModal();
   };
 
-  const handleDeleteClick = async () => {
+  const handleDeleteClick = () => {
     if (isNaN(formValues.service)) {
       Swal.fire("Error en el servicio", "No ha marcado un servicio", "error");
       console.log("Error en el servicio");
       return;
     }
 
-    await startDeletingService(activeService);
+    startDeletingService(activeService);
   };
 
   return (

@@ -17,7 +17,7 @@ export const peluqueriaSlice = createSlice({
   name: "peluqueria",
   initialState: {
     services: [],
-    events: [tempEvent],
+    events: [],
     activeEvent: null,
     activeService: null,
   },
@@ -46,15 +46,19 @@ export const peluqueriaSlice = createSlice({
     onGetServices: (state, { payload }) => {
       state.services = payload;
     },
+    onGetEvents: (state, { payload }) => {
+      state.events = payload;
+    },
   },
 });
 
 export const {
   onAddNewEvent,
   onAddNewService,
+  onDeleteService,
+  onGetEvents,
+  onGetServices,
   onSetActiveEvent,
   onSetActiveService,
   onUpdateService,
-  onDeleteService,
-  onGetServices,
 } = peluqueriaSlice.actions;

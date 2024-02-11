@@ -3,12 +3,14 @@ import {
   onAddNewEvent,
   onAddNewService,
   onDeleteService,
+  onGetEvents,
   onGetServices,
   onSetActiveEvent,
   onSetActiveService,
   onUpdateService,
 } from "../store/peluqueria/peluqueriaSlice";
 import peluqueriaApi from "../api/peluqueriaApi";
+import { convertEventsToDateEvents } from "../helpers";
 
 export const usePeluqueriaStore = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,27 @@ export const usePeluqueriaStore = () => {
   const { events, services, activeEvent, activeService } = useSelector(
     (state) => state.peluqueria
   );
+
+  const getServices = async () => {
+    try {
+      const { data } = await peluqueriaApi.get("/service");
+      const { services } = data.data;
+      dispatch(onGetServices(services));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const startLoadingEvents = async () => {
+    try {
+      const { data } = await peluqueriaApi.get("/event");
+
+      const events = convertEventsToDateEvents(data.data.events);
+      dispatch(onGetEvents(events));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const setActiveEvent = (peluqueriaEvent) => {
     dispatch(onSetActiveEvent(peluqueriaEvent));
@@ -91,16 +114,6 @@ export const usePeluqueriaStore = () => {
     );
   };
 
-  const getServices = async () => {
-    try {
-      const { data } = await peluqueriaApi.get("/service");
-      const { services } = data.data;
-      dispatch(onGetServices(services));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return {
     //* Propiedades
     events,
@@ -109,11 +122,12 @@ export const usePeluqueriaStore = () => {
     activeService,
 
     //* Métodos
+    startLoadingEvents,
+    getServices,
     setActiveEvent,
     setActiveService,
+    startDeletingService,
     startSavingEvent,
     startSavingService,
-    startDeletingService,
-    getServices,
   };
 };

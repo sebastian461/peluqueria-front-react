@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import { usePeluqueriaStore } from "../../hooks";
 
 export const PeluqueriaPage = () => {
-  const { events, setActiveEvent, getServices, activeService } =
+  const { events, setActiveEvent, getServices, startLoadingEvents } =
     usePeluqueriaStore();
 
   const [lastView, setLastView] = useState(
@@ -25,6 +25,10 @@ export const PeluqueriaPage = () => {
 
   useEffect(() => {
     getServices();
+  }, []);
+
+  useEffect(() => {
+    startLoadingEvents();
   }, []);
 
   const eventStyleGetter = (event, start, end, isSelected) => {};

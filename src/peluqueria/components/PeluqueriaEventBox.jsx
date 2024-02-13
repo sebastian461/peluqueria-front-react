@@ -3,7 +3,7 @@ export const PeluqueriaEventBox = ({ event }) => {
   return (
     <>
       <strong>
-        {title} {amount}
+        {title} ${amount}
       </strong>
       <span> - {user.name}</span>
     </>

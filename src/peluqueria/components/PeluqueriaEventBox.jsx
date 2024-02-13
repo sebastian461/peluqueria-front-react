@@ -1,8 +1,10 @@
 export const PeluqueriaEventBox = ({ event }) => {
-  const { title, user } = event;
+  const { title, user, amount } = event;
   return (
     <>
-      <strong>{title}</strong>
+      <strong>
+        {title} {amount}
+      </strong>
       <span> - {user.name}</span>
     </>
   );

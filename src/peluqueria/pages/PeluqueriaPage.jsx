@@ -13,11 +13,13 @@ import {
 
 import { getMessagesEs, localizer } from "../../helpers";
 import { useEffect, useState } from "react";
-import { usePeluqueriaStore } from "../../hooks";
+import { useAuthStore, usePeluqueriaStore } from "../../hooks";
 
 export const PeluqueriaPage = () => {
   const { events, setActiveEvent, getServices, startLoadingEvents } =
     usePeluqueriaStore();
+
+  const { user } = useAuthStore();
 
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "month"
@@ -66,7 +68,8 @@ export const PeluqueriaPage = () => {
       <PeluqueriaServiceModal />
       <PeluqueriaEditServiceModal />
 
-      <FabAddNewService />
+      {user.role === "admin" && <FabAddNewService />}
+
       <FabAddNewEvent />
     </>
   );

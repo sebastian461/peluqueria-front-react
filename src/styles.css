@@ -39,8 +39,24 @@
   padding: 10px;
 }
 
+.customDatePickerWidth,
+.customDatePickerWidth > div.react-datepicker-wrapper,
+.customDatePickerWidth
+  > div
+  > div.react-datepicker__input-container
+  .customDatePickerWidth
+  > div
+  > div.react-datepicker__input-container
+  input {
+  width: 100%;
+}
+
 .modal-size {
   max-height: 300px;
+}
+
+.modal-rep {
+  max-height: 400px;
 }
 
 /* FABS */
@@ -65,4 +81,8 @@
   left: 25px;
   width: 50px;
   height: 50px;
+}
+
+.fab-rep {
+  margin-bottom: 115px;
 }

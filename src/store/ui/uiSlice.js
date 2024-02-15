@@ -3,9 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 export const uiSlice = createSlice({
   name: "ui",
   initialState: {
-    isEventModalOpen: false,
-    isServiceModalOpen: false,
     isEditServiceModalOpen: false,
+    isEventModalOpen: false,
+    isReportModalOpen: false,
+    isServiceModalOpen: false,
   },
   reducers: {
     onOpenEventModal: (state) => {
@@ -17,10 +18,14 @@ export const uiSlice = createSlice({
     onOpenEditServiceModal: (state) => {
       state.isEditServiceModalOpen = true;
     },
+    onOpenReportModal: (state) => {
+      state.isReportModalOpen = true;
+    },
     onCloseModal: (state) => {
-      state.isEventModalOpen = false;
-      state.isServiceModalOpen = false;
       state.isEditServiceModalOpen = false;
+      state.isEventModalOpen = false;
+      state.isReportModalOpen = false;
+      state.isServiceModalOpen = false;
     },
   },
 });
@@ -29,5 +34,6 @@ export const {
   onCloseModal,
   onOpenEditServiceModal,
   onOpenEventModal,
+  onOpenReportModal,
   onOpenServiceModal,
 } = uiSlice.actions;

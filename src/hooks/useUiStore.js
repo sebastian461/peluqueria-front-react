@@ -4,11 +4,16 @@ import {
   onOpenEditServiceModal,
   onOpenEventModal,
   onOpenServiceModal,
+  onOpenReportModal,
 } from "../store/ui/uiSlice";
 
 export const useUiStore = () => {
-  const { isEventModalOpen, isServiceModalOpen, isEditServiceModalOpen } =
-    useSelector((state) => state.ui);
+  const {
+    isEditServiceModalOpen,
+    isEventModalOpen,
+    isReportModalOpen,
+    isServiceModalOpen,
+  } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
 
   const openEventModal = () => {
@@ -27,16 +32,22 @@ export const useUiStore = () => {
     dispatch(onCloseModal());
   };
 
+  const openReportModal = () => {
+    dispatch(onOpenReportModal());
+  };
+
   return {
     //* Propiedades
-    isEventModalOpen,
-    isServiceModalOpen,
     isEditServiceModalOpen,
+    isEventModalOpen,
+    isReportModalOpen,
+    isServiceModalOpen,
 
     //* Métodos
     closeModal,
     openEditServiceModal,
     openEventModal,
+    openReportModal,
     openServiceModal,
   };
 };

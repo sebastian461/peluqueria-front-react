@@ -1,4 +1,4 @@
-import { usePeluqueriaStore, useUiStore } from "../../hooks";
+import { useUiStore } from "../../hooks";
 
 export const FabAddNewEvent = () => {
   const { openEventModal } = useUiStore();

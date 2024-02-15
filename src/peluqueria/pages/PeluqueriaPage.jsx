@@ -14,6 +14,8 @@ import {
 import { getMessagesEs, localizer } from "../../helpers";
 import { useEffect, useState } from "react";
 import { useAuthStore, usePeluqueriaStore } from "../../hooks";
+import { FabReport } from "../components/FabReport";
+import { PeluqueriaReportModal } from "../components/PeluqueriaReportModal";
 
 export const PeluqueriaPage = () => {
   const { events, setActiveEvent, getServices, startLoadingEvents } =
@@ -65,12 +67,18 @@ export const PeluqueriaPage = () => {
       />
 
       <PeluqueriaModal />
-      <PeluqueriaServiceModal />
-      <PeluqueriaEditServiceModal />
-
-      {user.role === "admin" && <FabAddNewService />}
-
       <FabAddNewEvent />
+
+      {user.role === "admin" && (
+        <>
+          <FabAddNewService />
+          <FabReport />
+
+          <PeluqueriaServiceModal />
+          <PeluqueriaEditServiceModal />
+          <PeluqueriaReportModal />
+        </>
+      )}
     </>
   );
 };

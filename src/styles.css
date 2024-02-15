@@ -51,12 +51,16 @@
   width: 100%;
 }
 
+.react-datepicker-popper {
+  position: relative; /* Cambia a relative en lugar de absolute */
+}
+
 .modal-size {
   max-height: 300px;
 }
 
 .modal-rep {
-  max-height: 400px;
+  max-height: 425px;
 }
 
 /* FABS */

@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import peluqueriaApi from "../api/peluqueriaApi";
 import { onLoadUsers } from "../store/admin/adminSlice";
+import { saveAs } from "file-saver";
+import { parseISO } from "date-fns";
 
 export const useAdminStore = () => {
   const { users } = useSelector((state) => state.admin);
@@ -18,26 +20,34 @@ export const useAdminStore = () => {
   };
 
   const startGenerateReport = async (values) => {
+    const formatStart = values.start
+      .toString()
+      .replace(" (hora de Ecuador)", "");
+    const formatEnd = values.end.toString().replace(" (hora de Ecuador)", "");
+
     try {
       let response;
+      let document;
       if (isNaN(values.id)) {
         response = await peluqueriaApi.get(
-          "/report/2024-02-13T03:13:32.012Z/2024-02-13T03:13:32.012Z",
+          `/report/${formatStart}/${formatEnd}`,
           {
             responseType: "blob",
           }
         );
-
-        const url = window.URL.createObjectURL(
-          new Blob([response.data], {
-            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          })
-        );
-
-        return url;
       } else {
-        console.log(values.id);
+        response = await peluqueriaApi.get(
+          `/reportId/${values.id}/${formatStart}/${formatEnd}`,
+          {
+            responseType: "blob",
+          }
+        );
       }
+
+      document = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      saveAs(document, "reporte");
     } catch (error) {
       console.log(error);
     }

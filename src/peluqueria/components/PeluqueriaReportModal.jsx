@@ -6,6 +6,8 @@ import es from "date-fns/locale/es";
 
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker, { registerLocale } from "react-datepicker";
+import { differenceInSeconds } from "date-fns";
+import Swal from "sweetalert2";
 
 registerLocale("es", es);
 
@@ -25,8 +27,6 @@ export const PeluqueriaReportModal = () => {
   const { startLoadUsers, users, startGenerateReport } = useAdminStore();
 
   const [formValues, setFormValues] = useState(initialFormValues);
-
-  const [fileUrl, setFileUrl] = useState(null);
 
   const onSelectedChange = ({ target }, changin) => {
     setFormValues({
@@ -52,7 +52,20 @@ export const PeluqueriaReportModal = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    setFileUrl(startGenerateReport(formValues));
+
+    const difference = differenceInSeconds(formValues.end, formValues.start);
+
+    if (isNaN(difference) || difference < 0) {
+      Swal.fire(
+        "Las fechas no son correctas",
+        "Revisar las fechas ingresadas",
+        "error"
+      );
+      throw new Error("Las fechas no son correctas");
+    }
+
+    startGenerateReport(formValues);
+    closeModal();
   };
 
   return (
@@ -67,7 +80,7 @@ export const PeluqueriaReportModal = () => {
       <h1> Reporte </h1>
       <hr />
       <form className="container" onSubmit={onSubmit}>
-        <div className="form-group mb-2">
+        <div className="form-group mb-3">
           <label>Desde</label>
           <div className="customDatePickerWidth">
             <DatePicker
@@ -75,25 +88,33 @@ export const PeluqueriaReportModal = () => {
               onChange={(event) => onDateChange(event, "start")}
               dateFormat={format}
               className="form-control"
+              showTimeSelect
+              locale="es"
+              timeCaption="Hora"
+              popperPlacement="bottom-start"
             />
           </div>
         </div>
 
-        <div className="form-group mb-2">
+        <div className="form-group mb-3">
           <label>Hasta</label>
           <div className="customDatePickerWidth">
             <DatePicker
-              selected={formValues.start}
+              selected={formValues.end}
               onChange={(event) => onDateChange(event, "end")}
               dateFormat={format}
               className="form-control"
+              showTimeSelect
+              locale="es"
+              timeCaption="Hora"
+              popperPlacement="bottom-start"
             />
           </div>
         </div>
 
-        <hr />
+        <hr className="mb-3" />
 
-        <div className="form-group mb-3">
+        <div className="form-group mb-4">
           <label>Encargado (opcional)</label>
           <select
             className="form-select"
@@ -114,11 +135,6 @@ export const PeluqueriaReportModal = () => {
           <i className="fa fa-file"></i>
           <span> Generar reporte</span>
         </button>
-        {fileUrl && (
-          <a href={fileUrl} download="report.xlsx">
-            Descargar
-          </a>
-        )}
       </form>
     </Modal>
   );

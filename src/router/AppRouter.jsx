@@ -7,6 +7,7 @@ import { AuthRouter } from "./AuthRouter";
 import { PeluqueriaRouter } from "./PeluqueriaRouter";
 import { useAuthStore } from "../hooks";
 import { useEffect } from "react";
+import { CheckingAuth } from "../ui/components/CheckingAuth";
 
 const notAuthenticatedRoutes = [
   {
@@ -16,6 +17,13 @@ const notAuthenticatedRoutes = [
   {
     path: "/*",
     element: <Navigate to="auth" />,
+  },
+];
+
+const checking = [
+  {
+    path: "*",
+    element: <CheckingAuth />,
   },
 ];
 
@@ -40,6 +48,8 @@ export const AppRouter = () => {
   const routes =
     status === "authenticated"
       ? [...authenticatedRoutes]
+      : status === "checking"
+      ? [...checking]
       : [...notAuthenticatedRoutes];
 
   const router = createBrowserRouter(routes);
